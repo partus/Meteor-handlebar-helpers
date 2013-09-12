@@ -21,20 +21,33 @@ if (typeof Handlebars !== 'undefined') {
       return (str.length > len)?str.substr(0, Math.max(len-3, 0))+'...':str;
     });
 
-    Handlebars.registerHelper('$eq', function (a, b) {
-      return (a === b); //Only text, numbers, boolean - not array & objects
+    Handlebars.registerHelper('$eq', function(v1, v2, options) {
+      if(v1 === v2) {
+        return options.fn(this);
+      }
+        return options.inverse(this);
     });
 
-    Handlebars.registerHelper('$neq', function (a, b) {
-      return (a !== b); //Only text, numbers, boolean - not array & objects
+    Handlebars.registerHelper('$neq', function(v1, v2, options) {
+      if(v1 !=== v2) {
+        return options.fn(this);
+      }
+       return options.inverse(this);
     });
 
     Handlebars.registerHelper('$in', function (a, b, c, d) {
-      return ( a === b || a === c || a === d);
+      if( a === b || a === c || a === d){
+        return options.fn(this);
+      }
+        return options.inverse(this);
+    
     });
 
     Handlebars.registerHelper('$nin', function (a, b, c, d) {
-      return ( a !== b || a !== c || a !== d);
+      if( a !== b || a !== c || a !== d){
+        return options.fn(this);
+      }
+        return options.inverse(this);
     });
 
     Handlebars.registerHelper('$exists', function (a) {
@@ -42,24 +55,25 @@ if (typeof Handlebars !== 'undefined') {
     });
 
     Handlebars.registerHelper('$lt', function (a, b) {
-      return (a < b);
+      if(a < b){
+        return options.fn(this);
+      }
+        return options.inverse(this);
     });
 
     Handlebars.registerHelper('$gt', function (a, b) {
-      return (a > b);
-    });
-
-    Handlebars.registerHelper('$lte', function (a, b) {
-      return (a < b);
-    });
-
-    Handlebars.registerHelper('$gte', function (a, b) {
-      return (a > b);
+      if (a > b){
+        return options.fn(this);
+      }
+        return options.inverse(this);
     });
 
 
     Handlebars.registerHelper('$and', function (a, b) {
-      return (a && b);
+      if  (a && b){
+        return options.fn(this);
+      }
+        return options.inverse(this);
     });
 
     Handlebars.registerHelper('$or', function (a, b) {
